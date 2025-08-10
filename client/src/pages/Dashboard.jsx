@@ -4,8 +4,9 @@ import AddWorkout from "../components/AddWorkout";
 import CategoryChart from "../components/Cards/CategoryChart";
 import CountsCard from "../components/Cards/CountsCard";
 import WeeklyStatCard from "../components/Cards/WeeklyStatCard";
-import WorkoutCard from "../components/Cards/WorkoutCard";
 import { counts } from "../utils/data";
+// import WorkoutCard from "../components/cards/WorkoutCard";
+import WorkoutCard from "../components/Cards/WorkoutCard";
 const Container = styled.div`
   flex: 1;
   height: 100%;
