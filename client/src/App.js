@@ -1,4 +1,5 @@
 // import { useState } from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, styled } from "styled-components";
 import Navbar from "./components/Navbar";
@@ -21,13 +22,14 @@ const Container = styled.div`
 
 function App() {
   // const [currentUser, setCurrentUser] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
       <ThemeProvider theme={lightTheme}>
         <BrowserRouter>
-          {true ? (
+          {currentUser ? (
             <Container>
-              <Navbar />
+              <Navbar currentUser={currentUser} />
               <Routes>
                 <Route path="/" exact element={<Dashboard />} />
                 <Route path="/workout" exact element={<Workout />} />

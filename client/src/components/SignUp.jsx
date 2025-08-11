@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
+import { UserSignUp } from "../api";
+import { loginSuccess } from "../redux/reducer/userSlice";
 import Buttons from "./Buttons";
 import TextInput from "./TextInput";
 
@@ -21,9 +24,25 @@ const Text = styled.div`
   color: ${({ theme }) => theme.text_secondary + 90};
 `;
 const SignUp = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [password, setpassword] = useState("");
-  const [emailId, setemailId] = useState("");
+  const [email, setemail] = useState("");
+  const validateInputs = () => {
+    if (!email || !password || !name) {
+      alert("Please fill in all fields");
+      return false;
+    }
+    return true;
+  };
+  const handleSignUp = async () => {
+    if (validateInputs) {
+      await UserSignUp({ email, name, password }).then((res) => {
+        dispatch(loginSuccess(res.data));
+        alert("Sign Up success");
+      });
+    }
+  };
   return (
     <Container>
       <div>
@@ -38,16 +57,16 @@ const SignUp = () => {
         }}
       >
         <TextInput
-          label="Email"
-          placeholder="Enter Email"
+          label="Name"
+          placeholder="Enter Name"
           value={name}
           handelChange={(e) => setName(e.target.value)}
         />
         <TextInput
-          label="Name"
-          placeholder="Enter Name"
-          value={emailId}
-          handelChange={(e) => setemailId(e.target.value)}
+          label="Email"
+          placeholder="Enter Email"
+          value={email}
+          handelChange={(e) => setemail(e.target.value)}
         />
         <TextInput
           password
@@ -56,7 +75,7 @@ const SignUp = () => {
           value={password}
           handelChange={(e) => setpassword(e.target.value)}
         />
-        <Buttons text="Sign Up" />
+        <Buttons text="Sign Up" onClick={handleSignUp} />
       </div>
     </Container>
   );

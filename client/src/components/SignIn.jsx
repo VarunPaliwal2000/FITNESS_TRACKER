@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
+import { UserSignIn } from "../api";
+import { loginSuccess } from "../redux/reducer/userSlice";
 import Buttons from "./Buttons";
 import TextInput from "./TextInput";
 
@@ -22,8 +25,26 @@ const Text = styled.div`
 `;
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [password, setpassword] = useState("");
-  const [emailId, setemailId] = useState("");
+  const [email, setemail] = useState("");
+
+  const validateInputs = () => {
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSignIn = async () => {
+    if (validateInputs()) {
+      await UserSignIn({ email, password }).then((res) => {
+        dispatch(loginSuccess(res.data));
+        alert("Login Success");
+      });
+    }
+  };
   return (
     <Container>
       <div>
@@ -40,8 +61,8 @@ const SignIn = () => {
         <TextInput
           label="Email"
           placeholder="Enter Email"
-          value={emailId}
-          handelChange={(e) => setemailId(e.target.value)}
+          value={email}
+          handelChange={(e) => setemail(e.target.value)}
         />
         <TextInput
           password
@@ -50,7 +71,7 @@ const SignIn = () => {
           value={password}
           handelChange={(e) => setpassword(e.target.value)}
         />
-        <Buttons text="Sign In" />
+        <Buttons text="Sign In" onClick={handleSignIn} />
       </div>
     </Container>
   );
