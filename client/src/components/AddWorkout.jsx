@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ButtonComp from "./Buttons";
 import TextInput from "./TextInput";
 
 const Card = styled.div`
@@ -24,10 +25,10 @@ const Title = styled.div`
   }
 `;
 
-const AddWorkout = ({ workout, setWorkout }) => {
+const AddWorkout = ({ workout, setWorkout, addNewWorkout, buttonLoading }) => {
   return (
     <Card>
-      <Title>Weekly Calories Burned</Title>
+      <Title>Add New Workout</Title>
       <TextInput
         label="Workout"
         textArea
@@ -42,6 +43,13 @@ const AddWorkout = ({ workout, setWorkout }) => {
 -Duration`}
         value={workout}
         handelChange={(e) => setWorkout(e.target.value)}
+      />
+      <ButtonComp
+        text="Add Workout"
+        small
+        onClick={() => addNewWorkout()}
+        isLoading={buttonLoading}
+        isDisabled={buttonLoading}
       />
     </Card>
   );

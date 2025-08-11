@@ -67,7 +67,7 @@ color: ${theme.primary};
   width: 100%;`}
 `;
 
-const button = ({
+const ButtonComp = ({
   text,
   isLoading,
   isDisabled,
@@ -104,4 +104,4 @@ const button = ({
   );
 };
 
-export default button;
+export default ButtonComp;

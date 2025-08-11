@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import { router } from "./routes/UserRoute.js";
+import Workout from "./models/WorkoutModel.js";
 
 dotenv.config();
 
@@ -28,12 +29,24 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-const connectMongoDB = () => {
+const connectMongoDB = async () => {
   mongoose.set("strictQuery", true);
-  mongoose
-    .connect(process.env.MONGOD_B)
-    .then((res) => console.log("connected to mongoose"))
-    .catch((err) => console.log(err));
+  await mongoose.connect(process.env.MONGOD_B);
+  console.log("✅ Connected to MongoDB");
+
+  // 🚨 Drop all indexes on "workouts" collection except the default _id
+  try {
+    const indexes = await Workout.collection.getIndexes();
+    for (const indexName of Object.keys(indexes)) {
+      if (indexName !== "_id_") {
+        await Workout.collection.dropIndex(indexName);
+        console.log(`🗑️ Dropped index: ${indexName}`);
+      }
+    }
+    console.log("✅ All non-default indexes dropped.");
+  } catch (err) {
+    console.error("⚠️ Error dropping indexes:", err.message);
+  }
 };
 
 const startServer = async () => {

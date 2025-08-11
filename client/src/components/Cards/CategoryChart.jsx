@@ -26,6 +26,7 @@ const Title = styled.div`
 `;
 
 const CategoryChart = ({ data }) => {
+  console.log("CategoryChart", data);
   return (
     <Card>
       <Title>Weekly Calories Burned</Title>
