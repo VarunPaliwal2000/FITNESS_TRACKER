@@ -2,8 +2,8 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import { router } from "./routes/UserRoute.js";
 import Workout from "./models/WorkoutModel.js";
+import { router } from "./routes/UserRoute.js";
 
 dotenv.config();
 

@@ -200,7 +200,7 @@ export const getWorkoutsByDate = async (req, res, next) => {
       date.getMonth(),
       date.getDate() + 1
     );
-
+    console.log("getWorkoutsByDate", date, startOfDay, endOfDay);
     const todaysWorkouts = await Workout.find({
       userId: userId,
       date: { $gte: startOfDay, $lt: endOfDay },

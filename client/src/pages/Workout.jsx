@@ -2,9 +2,12 @@ import { CircularProgress } from "@mui/material";
 import { DateCalendar } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { useEffect, useState } from "react";
 // import React, { useEffect, useState } from "react";
 // import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getWorkoutDetails } from "../api";
+import WorkoutCard from "../components/Cards/WorkoutCard";
 // import { getWorkouts } from "../api";
 // import WorkoutCard from "../components/cards/WorkoutCard";
 
@@ -73,6 +76,27 @@ const SecTitle = styled.div`
 `;
 
 const Workouts = () => {
+  const [todaysWorkouts, setTodaysWorkouts] = useState([]);
+  const [date, setDate] = useState();
+  const currDate = new Date();
+  const currDateStr = `${
+    currDate.getMonth() + 1
+  }/${currDate.getDate()}/${currDate.getFullYear()}`;
+  console.log(date);
+  const getTodaysWorkout = async () => {
+    try {
+      const token = localStorage.getItem("fittrack-app-token");
+      const res = await getWorkoutDetails(token, date || "");
+      setTodaysWorkouts(res?.data?.todaysWorkouts || []);
+      console.log("Today's Workouts:", res?.data);
+    } catch (err) {
+      console.error("Error fetching today's workouts:", err);
+    }
+  };
+  useEffect(() => {
+    getTodaysWorkout();
+  }, [date]);
+
   return (
     <Container>
       <Wrapper>
@@ -80,20 +104,21 @@ const Workouts = () => {
           <Title>Select Date</Title>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
-            // onChange={(e) => setDate(`${e.$M + 1}/${e.$D}/${e.$y}`)}
+              showDaysOutsideCurrentMonth
+              onChange={(e) => setDate(`${e.$M + 1}/${e.$D}/${e.$y}`)}
             />
           </LocalizationProvider>
         </Left>
         <Right>
           <Section>
-            <SecTitle>Todays Workout</SecTitle>
-            {false ? (
+            <SecTitle>{date || currDateStr}</SecTitle>
+            {!todaysWorkouts ? (
               <CircularProgress />
             ) : (
               <CardWrapper>
-                {/* {todaysWorkouts.map((workout) => (
-                  <WorkoutCard workout={workout} />
-                ))} */}
+                {todaysWorkouts.map((workout, idx) => (
+                  <WorkoutCard key={idx} workout={workout} />
+                ))}
               </CardWrapper>
             )}
           </Section>

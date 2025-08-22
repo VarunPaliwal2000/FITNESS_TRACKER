@@ -1,93 +1,28 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
-import AuthImage from "../utils/Images/AuthImage.jpg";
-import LogoImage from "../utils/Images/Logo.png";
+import { useState } from "react";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
-
-const Container = styled.div`
-  flex: 1;
-  hieght: 100%;
-  display: flex;
-  background: ${({ theme }) => theme.bg};
-  @media (max-width: 700px) {
-    flex-direction: column;
-  }
-`;
-const Left = styled.div`
-  flex: 1;
-  position: relative;
-  @media (max-width: 700px) {
-    diplay: none;
-  }
-`;
-const Right = styled.div`
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 40px;
-  gap: 16px;
-  align-items: center;
-  justify-content: center;
-`;
-const Logo = styled.img`
-  position: absolute;
-  width: 70px;
-  top: 40px;
-  left: 60px;
-  z-index: 10;
-`;
-const Image = styled.img`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-`;
-const Text = styled.div`
-  font-size: 16px;
-  text-align: center;
-  color: ${({ theme }) => theme.text_secondary};
-  margin-top: 16px;
-  @media (max-width: 400px) {
-    font-size: 14px;
-  }
-`;
-const TextButton = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-`;
+import "./Authentication.css";
 
 const Authentication = () => {
-  const [logIn, setLogin] = useState(false);
+  const [flipped, setFlipped] = useState(false);
+
   return (
-    <Container>
-      <Left>
-        <Logo src={LogoImage} />
-        <Image src={AuthImage} />
-      </Left>
-      <Right>
-        {logIn ? (
-          <>
-            <SignUp />
-            <Text>
-              Don't have an account?{" "}
-              <TextButton onClick={() => setLogin(false)}>SignIn</TextButton>
-            </Text>
-          </>
-        ) : (
-          <>
-            <SignIn />
-            <Text>
-              Don't have an account?{" "}
-              <TextButton onClick={() => setLogin(true)}>SignUp</TextButton>
-            </Text>
-          </>
-        )}
-      </Right>
-    </Container>
+    <div className={`${flipped ? "container" : "container_flipped"}`}>
+      <div className={`card${flipped ? " flipped" : ""}`}>
+        <div className="front">
+          <SignIn />
+          <button className="signin-link" onClick={() => setFlipped(true)}>
+            Sign Up if you dont have a account
+          </button>
+        </div>
+        <div className="back">
+          <SignUp />
+          <button className="signin-link" onClick={() => setFlipped(false)}>
+            Sign In if you have a account
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
