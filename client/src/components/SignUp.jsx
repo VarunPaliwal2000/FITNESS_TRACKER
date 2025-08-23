@@ -25,7 +25,7 @@ const Text = styled.div`
 `;
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   align-items: center;
   margin-bottom: 22px;
@@ -44,7 +44,7 @@ const SignUp = () => {
     return true;
   };
   const handleSignUp = async () => {
-    if (validateInputs) {
+    if (validateInputs()) {
       await UserSignUp({ email, name, password }).then((res) => {
         dispatch(loginSuccess(res.data));
         alert("Sign Up success");
@@ -54,7 +54,7 @@ const SignUp = () => {
   return (
     <Container>
       <div>
-        <Title>Welcome to fitness tracker </Title>
+        <Title>Welcome to fitTracker </Title>
         <Text>Please sign up </Text>
       </div>
       <div
@@ -72,13 +72,13 @@ const SignUp = () => {
             handelChange={(e) => setName(e.target.value)}
             side="back"
           />
-          <TextInput
+          {/* <TextInput
             label="Last Name"
             placeholder="Last Name"
             value={name}
             side="back"
             handelChange={(e) => setName(e.target.value)}
-          />
+          /> */}
           <TextInput
             label="Email"
             placeholder="Enter Email"

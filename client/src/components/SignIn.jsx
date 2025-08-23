@@ -16,7 +16,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 30px;
   font-weight: 800;
-  color: ${({ theme }) => theme.text_primary_front};
+  color: #35a4acff;
 `;
 const Text = styled.div`
   font-size: 16px;
@@ -48,8 +48,8 @@ const SignIn = () => {
   return (
     <Container>
       <div>
-        <Title>Welcome to fitness tracker </Title>
-        <Text>Please login </Text>
+        <Title>Sign in to FitTracker</Title>
+        {/* <Text>Please login </Text> */}
       </div>
       <div
         style={{

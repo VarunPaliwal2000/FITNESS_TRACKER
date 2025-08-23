@@ -1,8 +1,8 @@
 export const lightTheme = {
   bg: "#FFFFFF",
   bgLight: "#FFFFFF",
-  primary: "#007AFF",
-  secondary: "#5B86E5",
+  primary: "#50c9c3",
+  secondary: "#50c9c3",
 
   disabled: "#b1b2b3",
   menubar: "#191c29",
@@ -11,6 +11,7 @@ export const lightTheme = {
   menu_primary_text: "#F2F3F4",
   menu_secondary_text: "#b1b2b3",
   table_header: "#242445",
+  text_primary: "#404040",
   text_primary_front: "#404040",
   text_primary_back: "#F2F3F4",
   text_secondary_front: "#4d4c4c",
